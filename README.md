@@ -1,6 +1,6 @@
 Spark streaming example for Kafka: pseudo code not a working example
 
-##Scripts
+## Scripts
 
 streaming_run.sh  : Starts the producer spark job, waits 10 sec and start the consumer job  
 
