@@ -20,7 +20,6 @@ restart_from_offset = sys.argv[3]
 s3_raw_bucket = "ns-s3-raw-bucket"
 s3_raw_path = "s3://{}/your_input_folder".format(s3_raw_bucket) 
 
-# Define the schema for the incoming data
 # Define the schema for the XML data
 xml_custom_schema = StructType() .add("col1", IntegerType()) \
     .add("col2", IntegerType()) \
@@ -36,7 +35,7 @@ def process_data(df):
     # Data type validation and processing
     processed_df = validated_df.filter("key IS NOT NULL AND value IS NOT NULL")
 
-    # Deduplication based on a unique identifier, assuming 'name' as the unique identifier
+    # Deduplication based on a unique identifier, assuming 'key' as the unique identifier
     deduplicated_df = processed_df.dropDuplicates(["key"])
 
     # Perform your operations on the deduplicated data
