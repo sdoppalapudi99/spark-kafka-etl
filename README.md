@@ -10,5 +10,5 @@ streaming_run.sh  : Starts the producer spark job, waits 10 sec and start the co
 
 batch_run.sh  : Starts the ETL job for raw zone to processed zone  
 
-    This sctipt use  
+    This script use  
         batch_hourly/initial_delta.py : writes raw bucket location to processed bucket location
