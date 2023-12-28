@@ -76,7 +76,7 @@ else:
 try:
     query.awaitTermination()
 except KeyboardInterrupt:
-    # Perform any cleanup operations
+    # Free up cluster resources
     query.stop()
     spark.stop()
     pass

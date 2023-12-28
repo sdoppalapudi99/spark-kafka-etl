@@ -24,9 +24,14 @@ try:
         .format("kafka") \
         .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS) \
         .option("topic", KAFKA_TOPIC) \
-        .option("checkpointLocation", "/kafka_checkpoin_dir").start()
+        .option("checkpointLocation", "s3://your_bucket/path/to/checkpoint/folder").start()
 except Exception as e:
     print(f"Error writing : {e}")
 
 #wait until streaming query to complete
-result_stream.awaitTermination()
+try:
+    result_stream.awaitTermination()
+except KeyboardInterrupt:
+    # Free up cluster resources
+    spark.stop()
+    pass

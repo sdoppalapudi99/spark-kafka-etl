@@ -41,5 +41,5 @@ try:
 except (Exception, TypeError) as error:
     print(error)
 
-# Stop the Spark session
+# Stop the Spark session and # Free up cluster resources
 spark.stop()
