@@ -24,7 +24,7 @@ try:
         .format("kafka") \
         .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS) \
         .option("topic", KAFKA_TOPIC) \
-        .option("checkpointLocation", "s3://your_bucket/path/to/checkpoint/folder").start()
+        .option("checkpointLocation", "/kafka_checkpoint_dir").start()
 except Exception as e:
     print(f"Error writing : {e}")
 

@@ -53,7 +53,7 @@ if restart_from_offset != "latest":
     query = kafka_stream.selectExpr("CAST(value AS STRING)") \
         .writeStream \
         .foreachBatch(process_data) \
-        .option("checkpointLocation", "s3://your_bucket/path/to/checkpoint/folder") \
+        .option("checkpointLocation", "/path/to/checkpoint/folder") \
         .format("parquet") \
         .option("path", s3_raw_path) \
         .partitionBy("date") \
@@ -64,7 +64,7 @@ else:
         .writeStream \
         .foreachBatch(process_data) \
         .option("startingOffsets", restart_from_offset) \
-        .option("checkpointLocation", "s3://your_bucket/path/to/checkpoint/folder") \
+        .option("checkpointLocation", "/path/to/checkpoint/folder") \
         .format("parquet") \
         .option("path", s3_raw_path) \
         .partitionBy("date") \
