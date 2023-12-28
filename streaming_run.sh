@@ -14,7 +14,7 @@ KAFKA_TOPIC = "test_topic"
 PRODUCER_PYSPARK_FILE=streaming/producer.py
 CONSUMER_PYSPARK_FILE=streaming/consumer.py
 
-# Spark cluster URL
+# Spark cluster URL or Yarn
 SPARK_MASTER_URL=spark://your_spark_master:port
 
 # Additional configurations if needed
@@ -25,7 +25,7 @@ $SPARK_HOME/bin/spark-submit \
     --master $SPARK_MASTER_URL \
     --deploy-mode cluster \
     $SPARK_CONFIGS \
-    $PRODUCER_PYSPARK_FILE $KAFKA_BOOTSTRAP_SERVERS $KAFKA_TOPIC
+    $PRODUCER_PYSPARK_FILE $KAFKA_BOOTSTRAP_SERVERS $KAFKA_TOPIC &
 
 sleep 10
 
@@ -34,4 +34,4 @@ $SPARK_HOME/bin/spark-submit \
     --master $SPARK_MASTER_URL \
     --deploy-mode cluster \
     $SPARK_CONFIGS \
-    $CONSUMER_PYSPARK_FILE $KAFKA_BOOTSTRAP_SERVERS $KAFKA_TOPIC
+    $CONSUMER_PYSPARK_FILE $KAFKA_BOOTSTRAP_SERVERS $KAFKA_TOPIC "latest"

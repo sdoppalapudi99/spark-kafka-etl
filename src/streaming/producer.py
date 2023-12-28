@@ -1,32 +1,32 @@
 #Create a Spark Structured Streaming (Python or Scala) Pipeline to publish some data to Kafka
 import sys
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import to_json, struct
+from pyspark.sql.types import *
 
 # Create a Spark session
-spark = SparkSession.builder \
-    .appName("KafkaPublisher") \
-    .getOrCreate()
+spark = SparkSession.getBuilder.appName("PublishtoKafka").getOrCreate()
 
 # Define the Kafka broker and topic
 KAFKA_BOOTSTRAP_SERVERS = sys.argv[1] 
 KAFKA_TOPIC = sys.argv[2] 
 
 # Create a sample DataFrame with some data
-data = [("John", 25), ("Alice", 30), ("Bob", 28)]
-schema = ["name", "age"]
-df = spark.createDataFrame(data, schema)
+data = [("key1", "value1"), ("key2", "value2"), ("key3", "value3")]
+#define custom_schema
+custom_schema = StructType([StructField("key", StringType(), True),
+                StructField("value", StringType(), True)])
+df = spark.createDataFrame(data, custom_schema)
 
-# Convert DataFrame to JSON and select required columns
-df_json = df.select(to_json(struct("*")).alias("value"))
+#write data to kafka topic using writeStream API and before that convert to json aswell.
+try:
+    result_stream = df.selectExpr("CAST(key as STRING)", "to_json()) as value") \
+        .writeStream \
+        .format("kafka") \
+        .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS) \
+        .option("topic", KAFKA_TOPIC) \
+        .option("checkpointLocation", "/kafka_checkpoin_dir").start()
+except Exception as e:
+    print(f"Error writing : {e}")
 
-# Write data to Kafka in a streaming manner
-kafka_query = df_json \
-    .writeStream \
-    .format("kafka") \
-    .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS) \
-    .option("topic", KAFKA_TOPIC) \
-    .start()
-
-# Wait for the streaming query to finish
-kafka_query.awaitTermination()
+#wait until streaming query to complete
+result_stream.awaitTermination()
