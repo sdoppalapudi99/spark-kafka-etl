@@ -7,7 +7,7 @@ export SPARK_HOME=/path/to/your/spark
 export PYSPARK_PYTHON=/path/to/your/python
 
 # Your PySpark application file
-ETL_PYSPARK_FILE=streaming/batch_hourly.py
+ETL_PYSPARK_FILE=src/streaming/batch_hourly.py
 
 # Spark cluster URL or Yarn
 SPARK_MASTER_URL=spark://your_spark_master:port
