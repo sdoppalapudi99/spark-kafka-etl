@@ -11,8 +11,8 @@ KAFKA_BOOTSTRAP_SERVERS = "kafka1:9092,kafka2:9092"
 KAFKA_TOPIC = "test_topic"
 
 # Your PySpark application file
-PRODUCER_PYSPARK_FILE=streaming/producer.py
-CONSUMER_PYSPARK_FILE=streaming/consumer.py
+PRODUCER_PYSPARK_FILE=src/streaming/producer.py
+CONSUMER_PYSPARK_FILE=src/streaming/consumer.py
 
 # Spark cluster URL or Yarn
 SPARK_MASTER_URL=spark://your_spark_master:port
